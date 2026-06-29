@@ -735,6 +735,31 @@
     .footer-links { justify-content: center; }
     .footer-partner { text-align: center; }
   }
+
+  /* Contact form styles */
+  .contact-form {
+    max-width: 680px;
+    margin: 1.5rem auto 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 2px;
+    border: 1px solid rgba(13,13,13,0.08);
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: white;
+    resize: vertical;
+  }
+
+  .contact-form textarea { min-height: 140px; }
+
+  #form-status { margin-top: 0.6rem; font-size: 0.95rem; }
 </style>
 </head>
 <body>
@@ -952,6 +977,23 @@
 </section>
 
 <!-- FOOTER -->
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Get in touch</h2>
+  <p class="section-body">Send us a message — messages are delivered to Neeraj@pixelsandpen.com when you configure the form service. If you prefer not to sign up, the form will open your email client as a free fallback.</p>
+
+  <form id="contact-form" class="contact-form" action="https://formspree.io/f/yourFormID" method="POST">
+    <input type="text" name="name" placeholder="Your name" required>
+    <input type="email" name="_replyto" placeholder="Your email" required>
+    <textarea name="message" placeholder="Tell us about your project" required></textarea>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <button type="submit" class="btn-dark">Send</button>
+      <div id="form-status" style="display:none;color:var(--cream);"></div>
+    </div>
+  </form>
+
+</section>
 <footer>
   <div>
     <div class="footer-logo">Pixels <span>&</span> Pen</div>
@@ -968,6 +1010,47 @@
     Mumbai, India
   </div>
 </footer>
+
+<script>
+(function(){
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  if (!form) return;
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    status.style.display = 'block';
+    status.style.color = 'var(--cream)';
+    status.textContent = 'Sending...';
+    const action = form.action;
+    const data = new FormData(form);
+
+    if (action.includes('yourFormID')){
+      const subject = encodeURIComponent('Website contact: ' + (data.get('name') || ''));
+      const body = encodeURIComponent((data.get('message') || '') + '\n\nFrom: ' + (data.get('_replyto') || ''));
+      window.location.href = 'mailto:Neeraj@pixelsandpen.com?subject=' + subject + '&body=' + body;
+      status.textContent = 'Opening your email client as a fallback.';
+      return;
+    }
+
+    try {
+      const res = await fetch(action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.textContent = 'Thanks — your message was sent.';
+        form.reset();
+      } else {
+        const json = await res.json().catch(()=>null);
+        status.textContent = (json && json.error) ? json.error : 'Error sending message.';
+      }
+    } catch (err) {
+      status.textContent = 'Network error. Try the email fallback.';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
