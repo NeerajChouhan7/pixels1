@@ -88,6 +88,28 @@
       color: var(--text);
     }
 
+    .contact-corner {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.6;
+      z-index: 5;
+    }
+
+    .contact-corner a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .contact-corner a:hover {
+      color: var(--accent);
+    }
+
     @media (max-width: 600px) {
       .wrap { width: min(94vw, 640px); }
       summary { font-size: 0.92rem; }
@@ -96,11 +118,16 @@
   </style>
 </head>
 <body>
+  <div class="contact-corner">
+    <a href="mailto:neeraj@pixelsandpen.com">neeraj@pixelsandpen.com</a><br />
+    <a href="tel:+917247796922">+91 72477 96922</a>
+  </div>
+
   <main class="wrap">
     <details class="item" open>
       <summary>Who am I?</summary>
       <div class="answer">
-        I’m <a href="https://x.com/neervj" target="_blank" rel="noopener noreferrer">Neeraj</a> Chouhan. I’m 21, from Indore. After high school I moved to Bangalore, started India’s first hacker house, helped founders raise funds, built a content agency, moved to Mumbai, worked on India’s biggest campaigns for brands like FedEx, Dove, Lakme, and Tata, directed a commercial for <a href="https://x.com/Dheemanthredy/status/2069398297748648300?s=20" target="_blank" rel="noopener noreferrer">Maya</a> shot across five cities, and now I’m building a company to nurture the next generation of filmmakers and stories from India to the world.
+        I’m <a href="https://x.com/neervj" target="_blank" rel="noopener noreferrer">Neeraj Chouhan</a>, 21, in Mumbai. After high school I moved to Bangalore, started India’s first hacker house, helped founders raise funds, built a content agency, moved to Mumbai, worked on India’s biggest campaigns for brands like FedEx, Dove, Lakme, and Tata, directed a commercial for <a href="https://x.com/Dheemanthredy/status/2069398297748648300?s=20" target="_blank" rel="noopener noreferrer">Maya</a> shot across five cities, and now I’m building a company to nurture the next generation of filmmakers and stories from India to the world.
       </div>
     </details>
 
